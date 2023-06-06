@@ -1,0 +1,51 @@
+---
+title: "Stock project"
+format: pdf
+editor: visual
+---
+
+## Stock Data
+
+Download Data
+
+CFG \<- Citizens Financial Group
+
+GS-PJ \<- Goldman Sachs
+
+MA \<- Mastercard
+
+MS-PF \<- Morgan Stanley
+
+Stocks can be categorized as high or low volume based on their trading activity. High and low refer to the maximum and minimum prices in a given time period. Open and close are the prices at which a stock began and ended trading in the same period. Volume represent the number of shares traded. The adjusted close is the closing price after adjustment for all applicable splits and dividend distributions.
+
+```{r}
+#Load the Data
+CFGdata <- read.csv(file = "CFGstockdata(filtered).csv") 
+GSPJdata <- read.csv(file = "GS-PJstockdata(filtered).csv")
+MAdata <- read.csv(file = "MAstockdata(filtered).csv")
+MSPFdata <- read.csv(file = "MS-PFstockdata(filtered).csv")
+
+```
+
+```{r}
+# I would like to see open and close prices of the stock (the evolution)
+#CFG Data
+View(CFGdata)
+library(dplyr)
+library(ggplot2)
+#First convert them to Date:
+CFGdata$Date <- format(CFGdata$Date, format = "%m/%d/%Y")
+#Reduce the size of the dataset
+CFGdata %>%
+  filter(Date < "3/1/2022") -> CFGdata2 
+
+ggplot(CFGdata2,aes(x=Date))+
+  geom_line(aes(y=Low),color="blue")
+  
+  geom_line(aes(y=Open),color="red")+
+  geom_line(aes(y=High),color="pink")+
+  geom_line(aes(y=Close),color="green") 
+  
+barplot()
+
+```
