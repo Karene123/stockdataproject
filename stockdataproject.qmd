@@ -30,7 +30,6 @@ MSPFdata <- read.csv(file = "MS-PFstockdata(filtered).csv")
 ```{r}
 # I would like to see open and close prices of the stock (the evolution)
 #CFG Data
-View(CFGdata)
 library(dplyr)
 library(ggplot2)
 library(lubridate)
@@ -42,55 +41,136 @@ CFGdata$Date <- as.Date(CFGdata$Date, format = "%m/%d/%Y")
 #Let's group per month and get the average
 CFGdata %>%
   filter(Date < "2021-02-02") -> CFGdata2
-mean(CFGdata2$High)  
+mean(CFGdata2$High) -> AvgJan 
+mean(CFGdata2$Low) -> AvglowJan
+mean(CFGdata2$Open) -> AvgOpenJan
+mean(CFGdata2$Close) -> AvgClsJan
 
 CFGdata %>%
   filter(between(Date, as.Date("2021-02-02"), as.Date("2021-02-12"))) -> CFGdata3
-mean(CFGdata3$High) 
+mean(CFGdata3$High) -> AvgFeb
+mean(CFGdata3$Low) -> AvglowFeb
+mean(CFGdata3$Open) -> AvgOpenFeb
+mean(CFGdata3$Close) -> AvgClsFeb
 
 CFGdata %>%
   filter(between(Date, as.Date("2021-03-02"), as.Date("2021-03-12"))) -> CFGdata4
-mean(CFGdata4$High) 
+mean(CFGdata4$High) -> AvgMar
+mean(CFGdata4$Low) -> AvglowMar
+mean(CFGdata4$Open) -> AvgOpenMar
+mean(CFGdata4$Close) -> AvgClsMar
 
 CFGdata %>%
-  filter(between(Date, as.Date("2021-03-02"), as.Date("2021-03-12"))) -> CFGdata4
-mean(CFGdata4$High) 
+  filter(between(Date, as.Date("2021-04-01"), as.Date("2021-04-11"))) -> CFGdata5
+mean(CFGdata5$High) -> AvgApr
+mean(CFGdata5$Low) -> AvglowApr
+mean(CFGdata5$Open) -> AvgOpenApr
+mean(CFGdata5$Close) -> AvgClsApr
+
+CFGdata %>%
+  filter(between(Date, as.Date("2021-05-01"), as.Date("2021-05-11"))) -> CFGdata6
+mean(CFGdata6$High) -> AvgMay
+mean(CFGdata6$Low) -> AvglowMay
+mean(CFGdata6$Open) -> AvgOpenMay
+mean(CFGdata6$Close) -> AvgClsMay
+
+CFGdata %>%
+  filter(between(Date, as.Date("2021-06-01"), as.Date("2021-06-12"))) -> CFGdata7
+mean(CFGdata7$High) -> AvgJun
+mean(CFGdata7$Low) -> AvglowJun
+mean(CFGdata7$Open) -> AvgOpenJun
+mean(CFGdata7$Close) -> AvgClsJun
+
+CFGdata %>%
+  filter(between(Date, as.Date("2021-07-01"), as.Date("2021-07-12"))) -> CFGdata8
+mean(CFGdata8$High) -> AvgJul
+mean(CFGdata8$Low) -> AvglowJul
+mean(CFGdata8$Open) -> AvgOpenJul
+mean(CFGdata8$Close) -> AvgClsJul
+
+CFGdata %>%
+  filter(between(Date, as.Date("2021-08-01"), as.Date("2021-08-12"))) -> CFGdata9
+mean(CFGdata9$High) -> AvgAug
+mean(CFGdata9$Low) -> AvglowAug
+mean(CFGdata9$Open) -> AvgOpenAug
+mean(CFGdata9$Close) -> AvgClsAug
+
+CFGdata %>%
+  filter(between(Date, as.Date("2021-09-02"), as.Date("2021-09-12"))) -> CFGdata10
+mean(CFGdata10$High) -> AvgSep
+mean(CFGdata10$Low) -> AvglowSep
+mean(CFGdata10$Open) -> AvgOpenSep
+mean(CFGdata10$Close) -> AvgClsSep
+
+CFGdata %>%
+  filter(between(Date, as.Date("2021-10-02"), as.Date("2021-10-12"))) -> CFGdata11
+mean(CFGdata11$High) -> AvgOct
+mean(CFGdata11$Low) -> AvglowOct
+mean(CFGdata11$Open) -> AvgOpenOct
+mean(CFGdata11$Close) -> AvgClsOct
+
+CFGdata %>%
+  filter(between(Date, as.Date("2021-11-01"), as.Date("2021-11-11"))) -> CFGdata12
+mean(CFGdata12$High) -> AvgNov
+mean(CFGdata12$Low) -> AvglowNov
+mean(CFGdata12$Open) -> AvgOpenNov
+mean(CFGdata12$Close) -> AvgClsNov
+
+CFGdata %>%
+  filter(between(Date, as.Date("2021-12-01"), as.Date("2021-12-11"))) -> CFGdata13
+mean(CFGdata13$High) -> AvgDec
+mean(CFGdata13$Low) -> AvglowDec
+mean(CFGdata13$Open) -> AvgOpenDec
+mean(CFGdata13$Close) -> AvgClsDec
+
+
+#Create a dataframe with the average value per month
+df <- data.frame (AvgHigh  = c(AvgJan, AvgFeb, AvgMar, AvgApr, AvgMay, AvgJun, AvgJul, AvgAug, AvgSep, AvgOct, AvgNov, AvgDec),
+                  Avglow = c(AvglowJan, AvglowFeb, AvglowMar, AvglowApr, AvglowMay, AvglowJun, AvglowJul, AvglowAug, AvglowSep, AvglowOct, AvglowNov, AvglowDec),
+                  AvgOpn = c(AvgOpenJan, AvgOpenFeb, AvgOpenMar, AvgOpenApr, AvgOpenMay, AvgOpenJun, AvgOpenJul, AvgOpenAug, AvgOpenSep, AvgOpenOct, AvgOpenNov, AvgOpenDec),
+                  AvgCls = c(AvgClsJan, AvgClsFeb, AvgClsMar, AvgClsApr, AvgClsMay, AvgClsJun, AvgClsJul, AvgClsAug, AvgClsSep, AvgClsOct, AvgClsNov, AvgClsDec),
+                  Month = c("Jan", "Feb", "March", "April", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"))
+
+#Create the time series plot
+ggplot(CFGdata,aes(x=Date)) +
+  geom_line(aes(y=High),color="blue")
+#Create barchart with added parameters
+attach(mtcars)
+par(mfrow=c(2,1))
+barplot(df$AvgHigh,
+main = "Avegare Highest Stock Value per month",
+xlab = "Month",
+ylab = "Stock Value",
+names.arg = c("Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sep", "Oct", "Nov", "Dec"),
+col = "darkred",
+horiz = FALSE)
+barplot(df$Avglow,
+main = "Avegare Lowest Stock Value per month",
+xlab = "Month",
+ylab = "Stock Value",
+names.arg = c("Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sep", "Oct", "Nov", "Dec"),
+col = "pink",
+horiz = FALSE)
 
 
 
-
-CFGdata %>%
-  filter(Date > "4/1/2021") -> CFGdata4
-CFGdata %>%
-  filter(Date > "5/1/2021") -> CFGdata5
-CFGdata %>%
-  filter(Date > "6/1/2021") -> CFGdata6
-CFGdata %>%
-  filter(Date > "7/1/2021") -> CFGdata7
-CFGdata %>%
-  filter(Date > "8/1/2021") -> CFGdata8
-CFGdata %>%
-  filter(Date > "9/2/2021") -> CFGdata9
-CFGdata %>%
-  filter(Date > "10/2/2021") -> CFGdata10
-CFGdata %>%
-  filter(Date > "11/1/2021") -> CFGdata11
-CFGdata %>%
-  filter(Date > "12/1/2021") -> CFGdata12
-CFGdata %>%
-  filter(Date > "1/2/2022") -> CFGdata13
-CFGdata %>%
-  filter(Date > "2/2/2022") -> CFGdata14
-
-
-ggplot(CFGdata2,aes(x=Date))+
-  geom_line(aes(y=Low),color="blue")
+layout(matrix(c(1,1,2,3), 2, 2, byrow = TRUE))
+barplot(df$AvgOpn,
+main = "Avegare Open Stock Value per month",
+xlab = "Month",
+ylab = "Stock Value",
+names.arg = c("Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sep", "Oct", "Nov", "Dec"),
+col = "darkblue",
+horiz = FALSE)
+barplot(df$AvgCls,
+main = "Avegare Close Stock Value per month",
+xlab = "Month",
+ylab = "Stock Value",
+names.arg = c("Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sep", "Oct", "Nov", "Dec"),
+col = "red",
+horiz = FALSE)
   
-  geom_line(aes(y=Open),color="red")+
-  geom_line(aes(y=High),color="pink")+
-  geom_line(aes(y=Close),color="green") 
-  
-#Let's regroup the stock values per month using the average
+
 
 
 ```
